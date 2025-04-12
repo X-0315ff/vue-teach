@@ -1,5 +1,12 @@
 <script setup>
 // const props = defineProps(['title', 'user'])
+
+import { watch } from 'vue'
+
+/**
+ * 1. 在模板中使用prop时，可以不使用prop.
+ * 2. 监听时，需要使用getter方法
+ */
 const props = defineProps({
   title: {
     type: String,
@@ -18,6 +25,9 @@ const props = defineProps({
       return { first: 'hello', last: 'world' }
     },
   },
+})
+watch(props.user,()=>{
+  console.log('user is changed')
 })
 const emit = defineEmits(['changeAge'])
 const fn = () => {

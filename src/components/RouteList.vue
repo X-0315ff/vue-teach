@@ -50,6 +50,10 @@ const linkList = ref([
     path: '/life-cycle',
     name: '生命周期',
   },
+  {
+    path: '/v-model',
+    name: '组件上的v-model',
+  },
 ])
 </script>
 

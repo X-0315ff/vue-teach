@@ -8,7 +8,7 @@
  * {flush:post},在dom更新之后执行回调。
  */
 
-import { ref, watch, watchEffect } from 'vue'
+import { reactive, ref, watch, watchEffect } from 'vue'
 
 const a = ref(0)
 const b = ref({
@@ -47,19 +47,35 @@ watch(b, (value) => {
 
 // watchEffect,可以自动监听变化，但是如果存在异步，则自会监听第一个异步之前的响应式变化.并且监听模式和watch一样
 // watchPostEffect,在dom更新之后调用回调
-const f4 = ()=>{
-  return new Promise(resolve => setTimeout(resolve, 1000))
-};
+const f4 = () => {
+  return new Promise((resolve) => setTimeout(resolve, 1000))
+}
 
-watchEffect(async ()=>{
+watchEffect(async () => {
   console.log(b.value)
-  await f4();
+  await f4()
   console.log(a.value)
 })
 
 // watch和watchEffect函数返回值是一个函数，可以利用这个函数清理掉监听。
 // vue会清理掉顶层创建的监听器，其他情况下监听器需要自己手动销毁
 
+let c = reactive({ a: 1 })
+const changeC = () => {
+  c = reactive({ a: 2 })
+}
+watch(c, () => {
+  console.log(123123)
+})
+
+let d = ref({ a: 1 })
+const changeD = () => {
+  // d.value.a++
+  d.value = { a: 2 }
+}
+watch(d, () => {
+  console.log(123123)
+})
 </script>
 
 <template>
@@ -70,6 +86,8 @@ watchEffect(async ()=>{
     <div @click="f2">只修改年龄</div>
     <div @click="f3">全部修改</div>
     <div>监听reactive是深层监听</div>
+    <div @click="changeC">{{ c }}</div>
+    <div @click="changeD">{{ d }}</div>
   </div>
 </template>
 

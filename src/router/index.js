@@ -64,6 +64,11 @@ const router = createRouter({
       name: 'lifeCyclePage',
       component: () => import('@/pages/lifeCycle/LifeCyclePage.vue'),
     },
+    {
+      path: '/v-model',
+      name: 'VModelPage',
+      component: () => import('@/pages/vModelPage/VModelPage.vue'),
+    },
   ],
 })
 
