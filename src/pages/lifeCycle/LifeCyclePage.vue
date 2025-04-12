@@ -59,9 +59,12 @@ export default {
 <template>
   <div class="container">
     <div>this is father component,count is {{count}}</div>
-    <div @click="show = !show">toggle show child</div>
+
+    <div @click="show = !show">toggle show child显示所有孩子</div>
+
     <VChild v-if="show" @click="changeCount"></VChild>
-    <VSon v-if="showSon"></VSon>
+
+    <!-- <VSon v-if="showSon"></VSon> -->
   </div>
 </template>
 
