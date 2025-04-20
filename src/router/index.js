@@ -69,7 +69,42 @@ const router = createRouter({
       name: 'VModelPage',
       component: () => import('@/pages/vModelPage/VModelPage.vue'),
     },
+    {
+      path: '/pinia-setup',
+      name: 'piniaSetup',
+      component: () => import('@/pages/PiniaSetupPage.vue'),
+    },
+    {
+      path: '/pinia-option',
+      name: 'piniaOption',
+      component: () => import('@/pages/PiniaOptionPage.vue'),
+    },
+    {
+      path: '/router-page/:id',
+      name: 'routerPage',
+      meta: {
+        needLogin: true,
+      },
+      component: () => import('@/pages/RouterPage.vue'),
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: 'notFound',
+      component:()=>import('@/pages/404Page.vue')
+    }
   ],
 })
+router.beforeEach((to, from, next) => {
+  document.title = to.name
+  if( to.meta.needLogin){
 
+  }
+
+  next()
+})
+router.afterEach((to, from) => {
+  let num = Number(localStorage.getItem('duration')) || Date.now()
+  console.log('duration', (Date.now() - num) / 1000)
+  localStorage.setItem('duration', Date.now())
+})
 export default router

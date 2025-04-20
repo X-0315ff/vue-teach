@@ -5,7 +5,7 @@ import RouteList from '@/components/RouteList.vue'
 
 <template>
   <div class="app">
-    <div class="header flex-center">vue教学</div>
+    <div class="header flex-center" >vue教学</div>
     <div class="main">
       <div class="left-menu">
         <RouteList></RouteList>

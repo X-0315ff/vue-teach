@@ -12,9 +12,10 @@ import VSon from '@/pages/lifeCycle/VSon.vue'
 
 /**
  * 针对keep-alive包裹的组件，会额外多两个生命周期
- * activated: 组件插入到dom中
- * deactivated: 组件从dom中移除
+ * activated: 组件插入到dom中之后
+ * deactivated: 组件从dom中移除之后
  */
+
 export default {
   components: { VSon, VChild },
   data() {

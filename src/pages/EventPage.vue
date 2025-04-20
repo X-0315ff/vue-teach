@@ -7,10 +7,8 @@ const f1 = () => {
   num.value++
 }
 const f2 = (value) => {
-  alert(value)
 }
 const f3 = (e) => {
-  alert(e.target.innerText)
 }
 </script>
 

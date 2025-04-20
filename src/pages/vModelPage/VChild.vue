@@ -9,6 +9,8 @@ const age = defineModel('age') // 带有名字
 // 不使用defineModel
 const props = defineProps(['phone', 'user'])
 const emit = defineEmits(['update:phone', 'update:age', 'changeUser'])
+
+// 组件上v-model原理
 const phoneInput = (e) => {
   emit('update:phone', e.target.value)
 }
@@ -16,14 +18,18 @@ const phoneInput = (e) => {
 const addAge = () => {
   age.value++
 }
+
+// props.user 类型reactive
 const localUser = ref({ ...props.user })
 watch(
+  // props.user,
   () => props.user,
   () => {
     localUser.value = { ...props.user }
   },
   { deep: true },
 )
+
 const save = () => {
   emit('changeUser', { ...localUser.value })
 }

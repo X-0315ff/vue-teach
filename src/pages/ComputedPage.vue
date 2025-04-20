@@ -6,7 +6,7 @@ import { computed, reactive, ref } from 'vue'
  * 2. 当计算属性中的响应式变量发生变化的时候，会自动更新
  * 3. 如果计算属性中没有响应式，只会更新一次
  * 普通方法
- * 1. 普通方法中如果有响应式，每次页面更新的时候都会重新进行计算
+ * 1. 普通方法中如果有响应式，响应式变化，或者页面更新的时候都会重新进行计算
  * 2. 普通方法中没有响应式，页面更新的时候才会更新
  */
 const user = reactive({
@@ -24,25 +24,25 @@ const list = reactive([
     age: 5,
   },
 ])
-
+// 响应式发生改变的时候执行
 const filterList = computed(() => {
   return list.filter((item) => {
     return item.age > 6
   })
 })
+// 内部响应式变化，或者页面刷新的时候，都执行
 const calcList = () => {
-  alert(11111)
   return list.filter((item) => {
     return item.age > 6
   })
 }
+//
 const addList = () => {
   list.push({
     ...user,
   })
 }
 
-/////
 const showList1 = ref(true)
 const list1 = [
   {
@@ -54,13 +54,14 @@ const list1 = [
     age: 5,
   },
 ]
+// 内部没有响应式变量，只会执行一次
 const filterList1 = computed(() => {
   return list1.filter((item) => {
     return item.age > 6
   })
 })
+// 内部没有响应式，只会在页面筛选的时候执行
 const calcList1 = () => {
-  alert(22222)
   return list1.filter((item) => {
     return item.age > 6
   })

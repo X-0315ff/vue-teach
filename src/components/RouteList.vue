@@ -54,6 +54,18 @@ const linkList = ref([
     path: '/v-model',
     name: '组件上的v-model',
   },
+  {
+    path: '/pinia-setup',
+    name: 'pinia组合式写法',
+  },
+  {
+    path: '/pinia-option',
+    name: 'pinia选项式',
+  },
+  {
+    path: '/router-page',
+    name: '路由的使用方法',
+  },
 ])
 </script>
 
