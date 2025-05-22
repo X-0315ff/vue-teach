@@ -9,29 +9,29 @@ import {
 } from 'vue'
 
 onBeforeMount(() => {
-  console.log('son onBeforeMount-挂载前')
+  console.log('son onBeforeMount')
 })
 onMounted(() => {
-  console.log('son onMounted-挂载后')
+  console.log('son onMounted')
 })
 
 onUnmounted(() => {
-  console.log('son onUnmounted-卸载后')
+  console.log('son onUnmounted')
 })
 onUpdated(() => {
-  console.log('son onUpdated-更新后')
+  console.log('son onUpdated')
 })
 
 onBeforeUpdate(() => {
-  console.log('son onBeforeUpdate-更新前')
+  console.log('son onBeforeUpdate')
 })
 onBeforeUnmount(() => {
-  console.log('son onBeforeUnmount-卸载前')
+  console.log('son onBeforeUnmount')
 })
 </script>
 
 <template>
-  <div>this is son component 这是组合式子组件</div>
+  <div class="aaa" >this is son component</div>
 </template>
 
 <style scoped lang="scss"></style>

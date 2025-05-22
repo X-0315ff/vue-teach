@@ -49,8 +49,8 @@ export default {
 
 <template>
   <div class="container">
-    <div @click.stop="handleClick">this is child1 这是选项式子组件,num is {{ num }}</div>
-    <VSon></VSon>
+    <div @click.stop="handleClick">this is child1 component,num is {{ num }}</div>
+    <VSon class="aaa" text="1111"></VSon>
   </div>
 </template>
 

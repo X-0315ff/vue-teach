@@ -66,6 +66,10 @@ const linkList = ref([
     path: '/router-page',
     name: '路由的使用方法',
   },
+  {
+    path: '/login',
+    name: '登录',
+  },
 ])
 </script>
 

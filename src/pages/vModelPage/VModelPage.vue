@@ -28,11 +28,14 @@ const changeUser = (val) => {
     <div>parent:{{ user }}</div>
     <div @click="toggleUser">change user</div>
     <div @click="user.id++">修改用户id</div>
+    <!--      v-model="user.name" 相当于下面  -->
+    <!--      :modelValue="user.name"        -->
+    <!--      @update:modelValue="user.name = $event"     -->
     <VChild
-      :user="user"
       v-model="user.name"
       v-model:age="user.age"
       v-model:phone="user.phone"
+      :user="user"
       @change-user="changeUser"
       :key="user.id"
     ></VChild>

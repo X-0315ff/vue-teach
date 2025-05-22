@@ -48,13 +48,16 @@ watch(b, (value) => {
 // watchEffect,可以自动监听变化，但是如果存在异步，则自会监听第一个异步之前的响应式变化.并且监听模式和watch一样
 // watchPostEffect,在dom更新之后调用回调
 const f4 = () => {
-  return new Promise((resolve) => setTimeout(resolve, 1000))
+  return new Promise((resolve) => {
+    console.log(b.value, 111222233333)
+    setTimeout(resolve, 1000)
+  })
 }
 
 watchEffect(async () => {
-  console.log(b.value)
+  console.log(b.value,123123)
   await f4()
-  console.log(a.value)
+  console.log(a.value,456456)
 })
 
 // watch和watchEffect函数返回值是一个函数，可以利用这个函数清理掉监听。

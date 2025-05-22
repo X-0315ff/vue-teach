@@ -88,16 +88,20 @@ const router = createRouter({
       component: () => import('@/pages/RouterPage.vue'),
     },
     {
+      path: '/login',
+      name: 'loginPage',
+      component: () => import('@/pages/LogIn.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
-      component:()=>import('@/pages/404Page.vue')
-    }
+      component: () => import('@/pages/404Page.vue'),
+    },
   ],
 })
 router.beforeEach((to, from, next) => {
   document.title = to.name
-  if( to.meta.needLogin){
-
+  if (to.meta.needLogin) {
   }
 
   next()
