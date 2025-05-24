@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/pages/HomePage.vue'
+import useUserInfoStore from '@/stores/userInfo.js'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,6 +23,9 @@ const router = createRouter({
     {
       path: '/add-style',
       name: 'addStyle',
+      meta: {
+        needLogin: true,
+      },
       component: () => import('@/pages/AddStylePage.vue'),
     },
     {
@@ -93,6 +97,14 @@ const router = createRouter({
       component: () => import('@/pages/LogIn.vue'),
     },
     {
+      path: '/post',
+      name: 'postPage',
+      meta: {
+        needLogin: true,
+      },
+      component: () => import('@/pages/PostPage.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: () => import('@/pages/404Page.vue'),
@@ -101,9 +113,14 @@ const router = createRouter({
 })
 router.beforeEach((to, from, next) => {
   document.title = to.name
+  const userinfoStore = useUserInfoStore()
   if (to.meta.needLogin) {
+    if (userinfoStore.user.isLogin) {
+      next()
+    } else {
+      next('/login')
+    }
   }
-
   next()
 })
 router.afterEach((to, from) => {

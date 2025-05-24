@@ -1,10 +1,13 @@
 <script setup>
 import { computed, ref } from 'vue'
-import { registry } from '@/http/index.js'
+import { instance, login, registry } from '@/http/index.js'
+import useUserInfoStore from '@/stores/userInfo.js'
 
 const username = ref('')
 const password = ref('')
-const status = ref(false) // true表示登录
+const isLoading = ref(false)
+const status = ref(true) // true表示登录，false表示注册
+const userInfoStore = useUserInfoStore()
 const btnText = computed(() => {
   return status.value ? '登录' : '注册'
 })
@@ -20,11 +23,29 @@ const register = () => {
   })
 }
 const handleBtn = () => {
+  if (isLoading.value) {
+    return
+  }
+  isLoading.value = true
+  // 登录逻辑
   if (status.value) {
+    login(username.value, password.value)
+      .then((data) => {
+        instance.defaults.headers.common['Authorization'] = data.token
+        userInfoStore.setUser(data)
+      })
+      .finally(() => {
+        isLoading.value = false
+      })
   } else {
-    registry(username.value, password.value).then((data) => {
-      console.log(data, 1111)
-    })
+    // 注册
+    registry(username.value, password.value)
+      .then((data) => {
+        status.value = true
+      })
+      .finally(() => {
+        isLoading.value = false
+      })
   }
 }
 </script>
@@ -40,7 +61,9 @@ const handleBtn = () => {
         <span>password</span>
         <input type="password" v-model="password" />
       </div>
-      <div class="primary-btn" @click="handleBtn">{{ btnText }}</div>
+      <div class="primary-btn" @click="handleBtn" :class="{ disable: isLoading }">
+        {{ btnText }}
+      </div>
       <span class="notify" @click="toggleBtn">{{ toggleText }}</span>
     </div>
   </div>
@@ -113,6 +136,10 @@ const handleBtn = () => {
     &:hover {
       color: #4822a5;
     }
+  }
+
+  .disable {
+    opacity: 0.3;
   }
 }
 </style>

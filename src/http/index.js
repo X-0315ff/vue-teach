@@ -12,3 +12,12 @@ export async function registry(username, password) {
       return res.data
     })
 }
+
+export async function login(username, password) {
+  return axios.post('/auth/login', { username, password }).then((res) => {
+    return res.data
+  })
+}
+
+export const instance = axios.create();
+
