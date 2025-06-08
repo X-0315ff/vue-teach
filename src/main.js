@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import '@/assets/reset.css'
 import App from './App.vue'
-
+import 'element-plus/dist/index.css'
 import router from './router'
 import VChild from '@/pages/lifeCycle/VChild.vue'
 

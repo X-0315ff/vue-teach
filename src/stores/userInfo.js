@@ -5,6 +5,7 @@ import { ref } from 'vue'
 
 const useUserInfoStore = defineStore(piniaConstant.userinfo, () => {
   const user = ref({
+    id:null,
     username: '',
     isLogin: false,
     token: ''

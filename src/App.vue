@@ -5,7 +5,7 @@ import RouteList from '@/components/RouteList.vue'
 
 <template>
   <div class="app">
-    <div class="header flex-center" >vue教学</div>
+    <div class="header flex-center">vue教学</div>
     <div class="main">
       <div class="left-menu">
         <RouteList></RouteList>
@@ -20,7 +20,7 @@ import RouteList from '@/components/RouteList.vue'
 <style scoped lang="scss">
 .app {
   width: 100%;
-  height: 100%;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 
@@ -33,6 +33,7 @@ import RouteList from '@/components/RouteList.vue'
   .main {
     flex: 1;
     display: flex;
+    overflow: hidden;
 
     .left-menu {
       width: 300px;

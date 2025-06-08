@@ -23,23 +23,11 @@ export async function login(username, password) {
   })
 }
 
-
-export async function sendPost(title,text) {
-  return axios.post('/post/create',
-    {
-      title,
-      text
-    })
-    .then(data => {
-    return data
+export async function getUserInfo(token) {
+  return axios.get('/user', { headers: { Authorization: token } }).then((res) => {
+    return res.data
   })
 }
 
-export async function senListPost(page,size) {
-  return axios.post('/post/list/page').then(data =>{
-    return data
-  })
-}
-
-export const instance = axios.create();
-
+const instance = axios.create()
+export default instance
