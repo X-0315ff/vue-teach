@@ -33,9 +33,12 @@ const handleBtn = () => {
       .then((data) => {
         instance.defaults.headers.common['Authorization'] = data.token
         userInfoStore.setUser(data)
+        // console.log(data);
+        
       })
       .finally(() => {
         isLoading.value = false
+        
       })
   } else {
     // 注册

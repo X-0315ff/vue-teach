@@ -100,7 +100,7 @@ const router = createRouter({
       path: '/post',
       name: 'postPage',
       meta: {
-        needLogin: true,
+        needLogin: false,
       },
       component: () => import('@/pages/PostPage.vue'),
     },
@@ -114,6 +114,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   document.title = to.name
   const userinfoStore = useUserInfoStore()
+  // 判断是否需要登录
   if (to.meta.needLogin) {
     if (userinfoStore.user.isLogin) {
       next()

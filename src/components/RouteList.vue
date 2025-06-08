@@ -67,9 +67,13 @@ const linkList = ref([
     name: '路由的使用方法',
   },
   {
+    path: '/post',
+    name: 'Post页面'
+  },
+  {
     path: '/login',
     name: '登录',
-  },
+  }
 ])
 </script>
 
