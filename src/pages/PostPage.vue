@@ -1,23 +1,65 @@
 <script setup>
 import { onMounted, reactive, ref } from 'vue'
-import { ElButton, ElInput } from 'element-plus'
-import { createPostApi, listPostApi } from '@/http/post.js'
+import { ElButton, ElInput,ElSkeleton } from 'element-plus'
+import { createPostApi, listPostApi, updatePostApi } from '@/http/post.js'
 
 const title = ref('')
-const description = ref('')
+const text = ref('')
 const pageInfo = reactive({ page: 1, size: 5 })
-const editType = ref('edit')
-const createPost = () => {
-  createPostApi(title.value, description.value).then((res) => {})
+const postList = ref([])
+const editType = ref('add') // add
+const updateId = ref(-1)
+const isLoading = ref(false)
+// 点击按钮
+const handleBtn = () => {
+  if (editType.value === 'add') {
+    createPost()
+  } else {
+    updatePost()
+  }
 }
-const updatePost = () => {}
-const deletePost = () => {}
-const getPostList = () => {
-  listPostApi(pageInfo.page, pageInfo.size).then((res) => {
-    postList.value.push(...res)
+// 创建post;
+const createPost = () => {
+  createPostApi(title.value, text.value).then((res) => {
+    pageInfo.page = 1
+    postList.value = []
+    getPostList()
   })
 }
-const postList = ref([])
+// 更新post
+const updatePost = () => {
+  updatePostApi({ id: updateId.value, title: title.value, text: text.value }).then(() => {
+    let data = postList.value.find((item) => item.id === updateId.value)
+    data.title = title.value
+    data.text = text.value
+    editType.value = 'add'
+  })
+}
+// 删除post
+const deletePost = () => {}
+// 获取post列表
+const getPostList = () => {
+  if (isLoading.value) {
+    return
+  }
+  isLoading.value = true
+  listPostApi(pageInfo.page, pageInfo.size)
+    .then((res) => {
+      postList.value.push(...res)
+      pageInfo.page = pageInfo.page + 1
+    })
+    .finally(() => {
+      isLoading.value = false
+    })
+}
+// 点击更新按钮
+const handleUpdateBtn = (post) => {
+  editType.value = 'update'
+  title.value = post.title
+  text.value = post.text
+  updateId.value = post.id
+}
+
 onMounted(() => {
   getPostList()
 })
@@ -28,27 +70,33 @@ onMounted(() => {
   <div class="post-page">
     <div class="create-post">
       <div class="title">title</div>
-      <el-input v-model="title" />
-      <div class="title">content</div>
+      <el-input v-model="title" placeholder="请输入标题" />
+      <div class="title">text</div>
       <el-input
-        v-model="description"
+        v-model="text"
         :autosize="{ minRows: 3, maxRows: 6 }"
         type="textarea"
-        placeholder="Please input"
+        placeholder="请输入内容"
       />
       <div class="footer">
-        <el-button>save</el-button>
+        <el-button @click="handleBtn">{{ editType === 'add' ? 'create' : 'update' }}</el-button>
       </div>
     </div>
     <div class="list">
       <div class="title">post 列表</div>
       <div class="post" v-for="post in postList" :key="post.id">
-        <div class="title">title</div>
+        <div class="update">
+          <span>title</span>
+          <el-button @click="handleUpdateBtn(post)">update</el-button>
+        </div>
         <div>{{ post.title }}</div>
-        <div class="title">content</div>
+        <div class="title">text</div>
         <div>{{ post.text }}</div>
       </div>
+      <el-skeleton :rows="5" animated v-if="isLoading" />
     </div>
+
+    <el-button class="title" @click="getPostList" v-if="!isLoading">load 下一页数据</el-button>
   </div>
 </template>
 
@@ -94,6 +142,11 @@ onMounted(() => {
     gap: 10px;
     border: 1px solid #4822a5;
     border-radius: 12px;
+  }
+
+  .update {
+    display: flex;
+    justify-content: space-between;
   }
 }
 </style>
