@@ -1,7 +1,7 @@
 <script setup>
-import { onMounted, reactive, ref } from 'vue'
-import { ElButton, ElInput,ElSkeleton } from 'element-plus'
-import { createPostApi, listPostApi, updatePostApi } from '@/http/post.js'
+import { onMounted, reactive, ref, useTemplateRef } from 'vue'
+import { ElButton, ElInput, ElSkeleton } from 'element-plus'
+import { createPostApi, deletePostApi, listPostApi, updatePostApi } from '@/http/post.js'
 
 const title = ref('')
 const text = ref('')
@@ -10,6 +10,14 @@ const postList = ref([])
 const editType = ref('add') // add
 const updateId = ref(-1)
 const isLoading = ref(false)
+const isEnd = ref(false)
+const list = useTemplateRef('list')
+const resetStatus = () => {
+  pageInfo.page = 1
+  postList.value = []
+  isEnd.value = false
+}
+
 // 点击按钮
 const handleBtn = () => {
   if (editType.value === 'add') {
@@ -21,8 +29,7 @@ const handleBtn = () => {
 // 创建post;
 const createPost = () => {
   createPostApi(title.value, text.value).then((res) => {
-    pageInfo.page = 1
-    postList.value = []
+    resetStatus()
     getPostList()
   })
 }
@@ -36,15 +43,24 @@ const updatePost = () => {
   })
 }
 // 删除post
-const deletePost = () => {}
+const deletePost = (post) => {
+  deletePostApi(post.id).then((res) => {
+    resetStatus()
+    getPostList()
+  })
+}
 // 获取post列表
 const getPostList = () => {
   if (isLoading.value) {
     return
   }
   isLoading.value = true
-  listPostApi(pageInfo.page, pageInfo.size)
+  return listPostApi(pageInfo.page, pageInfo.size)
     .then((res) => {
+      if (res.length === 0) {
+        isEnd.value = true
+        return
+      }
       postList.value.push(...res)
       pageInfo.page = pageInfo.page + 1
     })
@@ -59,7 +75,19 @@ const handleUpdateBtn = (post) => {
   text.value = post.text
   updateId.value = post.id
 }
-
+const canLoadMore = () => {
+  return (
+    !isLoading.value &&
+    !isEnd.value &&
+    list.value.scrollHeight - list.value.clientHeight - list.value.scrollTop < 100
+  )
+}
+// scrollHeight 没有滚动条的时候，内容区域的高度
+const handleScroll = () => {
+  if (canLoadMore) {
+    getPostList()
+  }
+}
 onMounted(() => {
   getPostList()
 })
@@ -82,12 +110,15 @@ onMounted(() => {
         <el-button @click="handleBtn">{{ editType === 'add' ? 'create' : 'update' }}</el-button>
       </div>
     </div>
-    <div class="list">
+    <div class="list" ref="list" @scroll="handleScroll">
       <div class="title">post 列表</div>
       <div class="post" v-for="post in postList" :key="post.id">
         <div class="update">
           <span>title</span>
-          <el-button @click="handleUpdateBtn(post)">update</el-button>
+          <div>
+            <el-button @click="handleUpdateBtn(post)">update</el-button>
+            <el-button @click="deletePost(post)">删除</el-button>
+          </div>
         </div>
         <div>{{ post.title }}</div>
         <div class="title">text</div>

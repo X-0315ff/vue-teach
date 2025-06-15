@@ -107,6 +107,14 @@ const router = createRouter({
       component: () => import('@/pages/PostPage.vue'),
     },
     {
+      path: '/calendar',
+      name: 'calendarPage',
+      meta: {
+        needLogin: true,
+      },
+      component: () => import('@/pages/CalendarPage.vue'),
+    },
+    {
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: () => import('@/pages/404Page.vue'),

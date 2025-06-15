@@ -6,17 +6,21 @@ export const createPostApi = (title, text) => {
   })
 }
 export const listPostApi = (page, size) => {
-
   return instance.post('/post/list', { page, size }).then((res) => {
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve(res.data)
-      },1000)
+      }, 1000)
     })
   })
 }
 export const updatePostApi = (post) => {
   return instance.post(`/post/update`, post).then((res) => {
     return res.data
+  })
+}
+export const deletePostApi = (id) => {
+  return instance.delete(`/post/delete/${id}`).then((res) => {
+    console.log(res.data)
   })
 }
