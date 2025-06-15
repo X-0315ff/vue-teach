@@ -1,9 +1,9 @@
 import axios from 'axios'
-import useUserInfoStore from '@/stores/userInfo'
+// import useUserInfoStore from '@/stores/userInfo'
 axios.defaults.baseURL = '/api'
 
 
-const userinfo = useUserInfoStore()
+// const userinfo = useUserInfoStore()
 
 
 export async function registry(username, password) {
