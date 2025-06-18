@@ -58,7 +58,7 @@ onMounted(() => {
   align-items: center;
 
   .calendar {
-    width: 1400px;
+    width: 100%;
     height: 800px;
     border: 1px solid #ccc;
     border-radius: 15px;
