@@ -77,12 +77,16 @@ const handleUpdateBtn = (post) => {
 }
 const canLoadMore = () => {
   return (
-    !isLoading.value &&
-    !isEnd.value &&
-    list.value.scrollHeight - list.value.clientHeight - list.value.scrollTop < 100
+    !isLoading.value && // 确保当前没有其他请求
+    !isEnd.value &&  // 确保后面有内容
+    // scrollHeight:整个滚动内容的总高度（包括隐藏部分）
+    // clientHeight:元素的可视区域高度
+    // scrollTop:当前滚动条卷去的高度
+    // 左式等于到底部还有多少像素
+    list.value.scrollHeight - list.value.clientHeight - list.value.scrollTop < 50
   )
 }
-// scrollHeight 没有滚动条的时候，内容区域的高度
+// 滚动监听，检测是否“接近底部”
 const handleScroll = () => {
   if (canLoadMore) {
     getPostList()
