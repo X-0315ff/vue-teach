@@ -6,7 +6,7 @@ import { ElMessage } from 'element-plus'
 
 const dateList = ref([])
 const initDateList = () => {
-  let startDate = dayjs().date(1).day(0).startOf() // 拿到当前月开始的那一周的周日X
+  let startDate = dayjs().date(1).day(0).startOf() // 拿到当前月开始的那一周的周日X,dayjs()拿到当前时间，date()获取或设置月份里的日期,day()获取或设置月份里的日期。
   const endDate = dayjs().add(1, 'month').date(0).day(6).endOf()
   while (startDate.isBefore(endDate)) {
     dateList.value.push({
@@ -49,22 +49,23 @@ onMounted(() => {
   </div>
 </template>
 
+
 <style scoped lang="scss">
 .calendar-page {
   width: 100%;
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
 
   .calendar {
     width: 100%;
-    height: 800px;
+    height: 600px;
     border: 1px solid #ccc;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
-    margin-top: -200px;
+    margin-top: 0;
   }
 
   .header {
