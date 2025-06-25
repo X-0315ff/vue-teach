@@ -115,6 +115,12 @@ const router = createRouter({
       component: () => import('@/pages/CalendarPage.vue'),
     },
     {
+      path:'/file',
+      name:'filePage',
+      component:()=> import('@/pages/FilePage.vue')
+    },
+    {
+
       path: '/:pathMatch(.*)*',
       name: 'notFound',
       component: () => import('@/pages/404Page.vue'),

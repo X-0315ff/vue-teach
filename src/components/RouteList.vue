@@ -78,6 +78,10 @@ const linkList = ref([
     path: '/calendar',
     name: 'calendar页面',
   },
+  {
+    path: '/file',
+    name: 'file上传页面',
+  },
 ])
 </script>
 

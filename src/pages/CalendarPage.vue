@@ -24,8 +24,8 @@ const initDateList = () => {
   while (startDate.isBefore(endDate) || startDate.isSame(endDate, 'day')) {
     dateList.value.push({
       dateString: startDate.format('DD 日'),
-      startTime: startDate.startOf('day'),
-      endTime: startDate.endOf('day'),
+      startTime: startDate.startOf().valueOf(),
+      endTime: startDate.endOf().valueOf(),
     })
     startDate = startDate.add(1, 'day')
   }
