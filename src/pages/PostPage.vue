@@ -31,6 +31,8 @@ const createPost = () => {
   createPostApi(title.value, text.value).then((res) => {
     resetStatus()
     getPostList()
+    title.value = ''
+    text.value = ''
   })
 }
 // 更新post
@@ -88,7 +90,7 @@ const canLoadMore = () => {
 }
 // 滚动监听，检测是否“接近底部”
 const handleScroll = () => {
-  if (canLoadMore) {
+  if (canLoadMore()) {
     getPostList()
   }
 }

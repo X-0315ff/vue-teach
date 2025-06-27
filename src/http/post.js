@@ -24,3 +24,9 @@ export const deletePostApi = (id) => {
     console.log(res.data)
   })
 }
+    
+export const getPostApi = (startTime, endTime) => {
+  return instance.post('/post/list/time', { startTime, endTime }).then((res) => {
+    return res.data
+  })
+}
