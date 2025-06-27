@@ -44,6 +44,7 @@ const initDateList = () => {
   getPost()
 }
 
+// 获取文章数据
 const getPost = () => {
       const startTime = dateList.value[0].startTime
       const endTime = dateList.value[dateList.value.length - 1].endTime
