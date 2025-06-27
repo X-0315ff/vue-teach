@@ -33,21 +33,24 @@ import RouteList from '@/components/RouteList.vue'
   .main {
     flex: 1;
     display: flex;
-    overflow: hidden;
+    min-height: 0; // 关键，防止flex子项溢出
 
     .left-menu {
       width: 300px;
-      height: 100%;
+      height: 100%;     // 占满main的高度
       border-right: 1px solid #eaecef;
-      overflow-y: auto;
       background-color: #f9fafb;
       padding: 20px;
+      overflow-y: auto; // 允许内容滚动
+      box-sizing: border-box;
     }
 
     .right-content {
       padding: 20px;
       flex: 1;
-      height: 100%;
+      overflow-y: auto; // 允许内容滚动
+      box-sizing: border-box;
+      min-width: 0; // 防止内容溢出
     }
   }
 }
