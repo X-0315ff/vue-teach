@@ -77,13 +77,6 @@ console.log(showDialog.value)
 }
 
 
-// 文件错误处理（未用到）
-const fileError = (message,callback) => {
-  if(message){
-    callback()
-  }
-}
-
 // 页面挂载时初始化日历
 onMounted(() => {
   initDateList()
