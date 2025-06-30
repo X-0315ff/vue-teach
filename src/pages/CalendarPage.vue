@@ -34,10 +34,12 @@ const initDateList = () => {
       dateString: startDate.format('DD 日'),
       startTime: startDate.startOf().valueOf(),
       endTime: startDate.endOf().valueOf(),
-      posts: [] // 后面用于挂载该天的 post 数据
+      posts: [], // 后面用于挂载该天的 post 数据
+      isCurrentMonth: startDate.month() === firstDayOfMonth.month() // 新增字段，判断是否为当前月
     })
     startDate = startDate.add(1, 'day')
   }
+  
   
   // console.log(dateList.value[0].startTime, dateList.value[dateList.value.length - 1].endTime)
   // 加载并绑定文章数据
@@ -96,6 +98,7 @@ onMounted(() => {
         <div
           v-for="(date, idx) in dateList"
           class="month-date"
+          :class="{ 'not-current-month': !date.isCurrentMonth }"
           :key="idx"
           @click="handeDate(date)"
         >
@@ -205,6 +208,16 @@ onMounted(() => {
     }
   }
 }
+
+.not-current-month {
+  color: #bbb ;
+  background: #f5f5f5;
+  .date-label,
+  .post-title {
+    color: #bbb;
+  }
+}
+
 
 /* 弹窗内容样式必须写在外层，不能嵌套在 .calendar-page 里 */
 .dialog-post-item {
